@@ -7,7 +7,7 @@
 <body>
     Посты в категории:
     {% for post in posts %}
-        {{ post.title }}
+        <a href="{% url 'post-details' pk=post.pk %}">{{ post.title }}</a>
     {% endfor %}
 </body>
 </html>

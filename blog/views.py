@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from .models import Category, Post
 
@@ -49,3 +49,12 @@ def posts_list(request):
     if category_slug is not None:
         posts = posts.filter(category_id=category_slug)
     return render(request, 'blog/posts_list.html', {'posts': posts})
+
+
+def post_details(request, pk):
+    # try:
+    #     post = Post.objects.get(pk=pk)
+    # except Post.DoesNotExist:
+    #     raise Http404
+    post = get_object_or_404(Post, pk=pk)
+    return render(request, 'blog/post_details.html', {'post': post})
