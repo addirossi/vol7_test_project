@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
+from .forms import AddPostForm, EditPostForm
 from .models import Category, Post
 
 
@@ -58,3 +59,27 @@ def post_details(request, pk):
     #     raise Http404
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_details.html', {'post': post})
+
+# CRUD(CREATE, RETRIEVE, UPDATE, DELETE)
+# GET(list, details), POST(create, update, delete)
+# GET(list, details), POST(Create), PUT/PATCH(Update), DELETE(delete)
+
+
+def add_post(request):
+    if request.POST:
+        post_form = AddPostForm(request.POST, request.FILES)
+        if post_form.is_valid():
+            post = post_form.save()
+            return redirect(post.get_absolute_url())
+    else:
+        post_form = AddPostForm()
+    return render(request, 'blog/add_post.html', {'post_form': post_form})
+#TODO: Вьюшка для редактирования поста
+def edit_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post_form = EditPostForm(request.POST or None, request.FILES or None, instance=post)
+    if post_form.is_valid():
+        post_form.save()
+        return redirect(post.get_absolute_url())
+    return render(request, 'blog/edit_post.html', {'post_form': post_form, 'post': post})
+#TODO: Вьюшка для удаления поста
