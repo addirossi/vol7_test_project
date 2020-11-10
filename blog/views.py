@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 
 from .forms import AddPostForm, EditPostForm
 from .models import Category, Post
@@ -74,7 +75,8 @@ def add_post(request):
     else:
         post_form = AddPostForm()
     return render(request, 'blog/add_post.html', {'post_form': post_form})
-#TODO: Вьюшка для редактирования поста
+
+
 def edit_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post_form = EditPostForm(request.POST or None, request.FILES or None, instance=post)
@@ -83,3 +85,13 @@ def edit_post(request, pk):
         return redirect(post.get_absolute_url())
     return render(request, 'blog/edit_post.html', {'post_form': post_form, 'post': post})
 #TODO: Вьюшка для удаления поста
+
+def delete_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.POST:
+        post.delete()
+        return redirect(reverse('index-page'))
+    return render(request, 'blog/delete_post.html', {})
+
+# Function-Based Views (FBV)
+# Class-Based Views (CBV)
