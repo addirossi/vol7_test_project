@@ -38,7 +38,14 @@ class PostDetailsView(DetailView):
     context_object_name = 'post'
 
 
-class AddPostView(CreateView):
+class ContextMixin:
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['post_form'] = self.get_form(self.get_form_class())
+        return context
+
+
+class AddPostView(ContextMixin, CreateView):
     model = Post
     template_name = 'blog/add_post.html'
     form_class = AddPostForm
@@ -48,7 +55,7 @@ class AddPostView(CreateView):
         return redirect(post.get_absolute_url())
 
 
-class UpdatePostView(UpdateView):
+class UpdatePostView(ContextMixin, UpdateView):
     model = Post
     template_name = 'blog/edit_post.html'
     form_class = EditPostForm

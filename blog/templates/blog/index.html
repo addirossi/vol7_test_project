@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Our cool blog!</title>
-</head>
-<body>
-    {% for category in categories %}
-<!--        posts/?category=slug-->
-        <a href="{% url 'posts-list' %}?category={{ category.slug }}">{{ category.name }}</a>
-    {% endfor %}
-</body>
-</html>
+{% extends 'includes/base.html' %}
+{% block body %}
+  {% for category in categories %}
+  <a href="{% url 'posts-list' %}?category={{ category.slug }}">{{ category.name }}</a>
+  {% endfor %}
+{% endblock body %}

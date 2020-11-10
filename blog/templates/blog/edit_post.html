@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Edit post</title>
-</head>
-<body>
+{% extends 'includes/base.html' %}
+{% block title %}Редактирование поста{% endblock title %}
+{% block body %}
   <h1>{{ post.title }}</h1>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ post_form.as_p }}
     <button type="submit" value="Submit">Сохранить</button>
   </form>
-</body>
-</html>
+{% endblock body %}

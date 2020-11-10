@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ post.title }}</title>
-</head>
-<body>
-    <p>{{ post.title }}</p>
-    <p>{{ post.text }}</p>
-    <p>{{ post.user }}</p>
-    <p>{{ post.created_at }}</p>
-    <p>{{ post.category }}</p>
-    {% if post.image %}
-        <p><img width="300" height="300" src="{{ post.image.url }}" alt="{{ post.title }}"></p>
-    {% endif %}
-</body>
-</html>
+{% extends 'includes/base.html' %}
+{% block title %}{{ post.title }}{% endblock title %}
+{% block body %}
+  <p>{{ post.title }}</p>
+  <p>{{ post.text }}</p>
+  <p>{{ post.user }}</p>
+  <p>{{ post.created_at }}</p>
+  <p>{{ post.category }}</p>
+  {% if post.image %}
+    <p><img width="300" height="300" src="{{ post.image.url }}" alt="{{ post.title }}"></p>
+  {% endif %}
+  <p>---------------------------------------</p>
+  <p><a href="{% url 'edit-post' pk=post.pk %}">Изменить пост</a> <a href="{% url 'delete-post' pk=post.pk %}">Удалить пост</a></p>
+{% endblock body %}

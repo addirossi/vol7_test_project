@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    Посты в категории:
-    {% for post in posts %}
-        <a href="{% url 'post-details' pk=post.pk %}">{{ post.title }}</a>
-    {% endfor %}
-</body>
-</html>
+{% extends 'includes/base.html' %}
+{% block title %}Список постов{% endblock title %}
+{% block body %}
+  {% for post in posts %}
+    <a href="{% url 'post-details' pk=post.pk %}">{{ post.title }}</a>
+  {% endfor %}
+  <p>----------------------------------------</p>
+  <p><a href="{% url 'add-post' %}"><button type="button">Добавить новый пост</button></a></p>
+{% endblock body %}
