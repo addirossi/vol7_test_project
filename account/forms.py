@@ -9,7 +9,7 @@ class RegistrationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'password', 'password_confirm',
-                  'first_name', 'last_name')
+                  'email', 'first_name', 'last_name')
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -21,7 +21,7 @@ class RegistrationForm(forms.ModelForm):
         data = self.cleaned_data
         # data -> {'username': 'mark01', 'password': 'qwerty', 'password_confirm': 'qwerty', ...}
         password = data.get('password')
-        password_confirm = data.get('password_confirm')
+        password_confirm = data.pop('password_confirm')
         if password != password_confirm:
             raise forms.ValidationError('Пароли не совпадают')
         return data
@@ -30,9 +30,27 @@ class RegistrationForm(forms.ModelForm):
         user = User.objects.create_user(**self.cleaned_data)
         return user
 
-# class UserManager:
-#     def create_user(self, username, password, **kwargs):
-#         ...
-#
-# User.objects.create_user(**self.cleaned_data)
-# User.objects.create_user(username=username, password=password, first_name=first_name)
+#ChangePasswordForm(user=user)
+
+class ChangePasswordForm(forms.Form):
+    old_password = forms.CharField(required=True, widget=forms.PasswordInput)
+    password = forms.CharField(min_length=6, required=True, widget=forms.PasswordInput)
+    password_confirm = forms.CharField(min_length=6, required=True, widget=forms.PasswordInput)
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+
+    def clean_old_password(self):
+        old_password = self.cleaned_data.get('old_password')
+        if not self.user.check_password(old_password):
+            raise forms.ValidationError('Введён неверный пароль')
+        return old_password
+
+    def clean(self):
+        data = self.cleaned_data
+        password = data.get('password')
+        password_confirm = data.pop('password_confirm')
+        if password != password_confirm:
+            raise forms.ValidationError('Пароли не совпадают')
+        return data

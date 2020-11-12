@@ -18,21 +18,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-# from blog.views import index_page, posts_list, post_details, add_post, edit_post, delete_post
 from blog.class_views import IndexPageView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    # path('', index_page, name='index-page'),
-    # # path('categories/<slug:slug>/', category_details, name='category-details'),
-    # path('posts/', posts_list, name='posts-list'),
-    # path('posts/<int:pk>/', post_details, name='post-details'),
-    # path('posts/add/', add_post, name='add-post'),
-    # path('posts/update/<int:pk>/', edit_post, name='edit-post'),
-    # path('posts/delete/<int:pk>/', delete_post, name='delete-post'),
     path('', IndexPageView.as_view(), name='index-page'),
+    path('accounts/', include('account.urls')),
+    path('admin/', admin.site.urls),
     path('posts/', include('blog.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-# 127.0.0.1:8000/posts - все посты
-# 127.0.0.1:8000/posts/?category=slug - посты по определённой категории
