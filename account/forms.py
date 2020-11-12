@@ -54,3 +54,10 @@ class ChangePasswordForm(forms.Form):
         if password != password_confirm:
             raise forms.ValidationError('Пароли не совпадают')
         return data
+
+    def save(self, commit=True):
+        password = self.cleaned_data['password']
+        self.user.set_password(password)
+        if commit:
+            self.user.save()
+        return self.user
