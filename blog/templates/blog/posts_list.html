@@ -1,9 +1,25 @@
 {% extends 'includes/base.html' %}
 {% block title %}Список постов{% endblock title %}
 {% block body %}
-  {% for post in posts %}
-    <a href="{% url 'post-details' pk=post.pk %}">{{ post.title }}</a>
-  {% endfor %}
-  <p>----------------------------------------</p>
-  <p><a href="{% url 'add-post' %}"><button type="button">Добавить новый пост</button></a></p>
+  <p><a href="{% url 'add-post' %}"><button type="button" class="btn btn-primary">Добавить новый пост</button></a></p>
+
+  <table class="table table-borderless">
+    <thead>
+      <tr>
+        <td>Заголовок поста</td>
+        <td>Изображение</td>
+        <td>Действия</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in posts %}
+        <tr>
+          <td><a href="{% url 'post-details' pk=post.pk %}">{{ post.title }}</a></td>
+          <td>{% if post.image %}<img width="100" height="100" src="{{ post.image.url }}">{% endif %}</td>
+          <td><a class="btn btn-primary btn-sm" role="button" href="{% url 'edit-post' post.pk %}">Изменить пост</a>
+              <a class="btn btn-secondary btn-sm" role="button" href="{% url 'delete-post' post.pk %}">Удалить пост</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock body %}
