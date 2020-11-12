@@ -1,6 +1,19 @@
 {% extends 'includes/base.html' %}
 {% block body %}
-  {% for category in categories %}
-  <a href="{% url 'posts-list' %}?category={{ category.slug }}">{{ category.name }}</a>
-  {% endfor %}
+  <table class="table table-borderless">
+    <thead>
+      <tr>
+        <th scope="col">Категория</th>
+        <th scope="col">Количество постов</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for category in categories %}
+        <tr>
+          <td><a href="{% url 'posts-list' %}?category={{ category.slug }}">{{ category.name }}</a></td>
+          <td>{{ category.posts.count }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock body %}

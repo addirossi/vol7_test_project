@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
@@ -18,10 +19,11 @@ class SigninView(LoginView):
     success_url = reverse_lazy('index-page')
 
 
-class PasswordChangeView(FormView):
+class PasswordChangeView(LoginRequiredMixin, FormView):
     form_class = ChangePasswordForm
     template_name = 'account/change_password.html'
     success_url = reverse_lazy('change-password-done')
+    login_url = reverse_lazy('signin')
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
