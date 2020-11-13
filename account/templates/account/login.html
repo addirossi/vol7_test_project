@@ -1,5 +1,9 @@
 {% extends 'includes/base_auth.html' %}
+{% load static %}
 {% block title %}Вход на сайт{% endblock title %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock css %}
 {% block body %}
   <div class="row justify-content-center">
     <div class="col-lg-4 col-md-6 col-sm-8">
@@ -18,6 +22,9 @@
               </div>
             <button type="submit" class="btn btn-info">Войти</button>
           </form>
+        </div>
+        <div class="card-footer text-center">
+          Вы ещё не зарегистрированы? Пройдите <a href="{% url 'signup' %}">регистрацию</a>
         </div>
       </div>
     </div>

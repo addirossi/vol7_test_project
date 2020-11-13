@@ -1,5 +1,9 @@
 {% extends 'includes/base_auth.html' %}
+{% load static %}
 {% block title %}Регистрация{% endblock title %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock css %}
 {% block body %}
   <div class="row justify-content-center">
     <div class="col-lg-4 col-md-6 col-sm-8">
