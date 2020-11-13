@@ -1,15 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
-  <h1>Регистрация</h1>
+{% extends 'includes/base_auth.html' %}
+{% block title %}Регистрация{% endblock title %}
+{% block body %}
+  <h1>Регистрация на сайте</h1>
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Зарегистрироваться</button>
+    {% for field in form %}
+      <div class="form-group">
+        {{ field.label_tag }}
+        {{ field }}
+      </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-info">Зарегистрироваться</button>
   </form>
-</body>
-</html>
+{% endblock body %}
