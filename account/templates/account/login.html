@@ -8,12 +8,14 @@
           <h3 class="card-title">Вход на сайт</h3>
           <form method="post">
             {% csrf_token %}
-            {% for field in form %}
               <div class="form-group">
-                {{ field.label_tag }}
-                {{ field }}
+                <label for="username-input">Имя пользователя:</label>
+                <input type="text" class="form-control" name="username" id="username-input" placeholder="Введите имя пользователя" required>
               </div>
-            {% endfor %}
+              <div class="form-group">
+                <label for="password-input">Пароль:</label>
+                <input type="password" class="form-control" name="password" id="password-input" placeholder="Введите пароль" required>
+              </div>
             <button type="submit" class="btn btn-info">Войти</button>
           </form>
         </div>
